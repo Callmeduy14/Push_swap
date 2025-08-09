@@ -1,35 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ops_push.c                                         :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yyudi <yyudi@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/09 18:51:15 by yyudi             #+#    #+#             */
-/*   Updated: 2025/08/09 18:51:16 by yyudi            ###   ########.fr       */
+/*   Created: 2025/07/03 14:20:45 by yyudi             #+#    #+#             */
+/*   Updated: 2025/07/08 11:45:41 by yyudi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/push_swap.h"
+#include "libft.h"
 
-static void	push(t_stack *to, t_stack *from)
+char	*ft_strdup(const char *s1)
 {
-	t_node	*n;
+	char	*dup;
+	size_t	len;
 
-	n = stack_pop_top(from);
-	if (!n)
-		return ;
-	stack_push_top(to, n);
-}
-
-void	op_pa(t_stack *a, t_stack *b)
-{
-	push(a, b);
-	ps_puts("pa\n");
-}
-
-void	op_pb(t_stack *a, t_stack *b)
-{
-	push(b, a);
-	ps_puts("pb\n");
+	len = ft_strlen(s1) + 1;
+	dup = malloc(len);
+	if (!dup)
+		return (NULL);
+	ft_memcpy(dup, s1, len);
+	return (dup);
 }

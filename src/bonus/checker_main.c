@@ -1,49 +1,54 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   checker_main.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yyudi <yyudi@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/09 18:35:53 by yyudi             #+#    #+#             */
-/*   Updated: 2025/08/09 20:30:34 by yyudi            ###   ########.fr       */
+/*   Created: 2025/08/09 18:35:58 by yyudi             #+#    #+#             */
+/*   Updated: 2025/08/09 20:29:23 by yyudi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/push_swap.h"
+#include "push_swap.h"
 
-static void	end_ok(t_stack *a, t_stack *b)
+static void	put_line(const char *s)
 {
-	stack_clear(a);
-	stack_clear(b);
+	size_t	i;
+
+	i = 0;
+	while (s[i] != '\0')
+		i++;
+	if (i > 0)
+		write(1, s, i);
+	write(1, "\n", 1);
 }
 
-static int	handle_small(t_stack *a, t_stack *b)
+int	ch_read_line(char *buf, int max)
 {
-	if (is_sorted(a))
+	int		i;
+	char	c;
+	int		r;
+
+	i = 0;
+	while (i < max - 1)
 	{
-		end_ok(a, b);
-		return (1);
+		r = (int)read(0, &c, 1);
+		if (r <= 0)
+			break ;
+		if (c == '\n')
+			break ;
+		buf[i++] = c;
 	}
-	if (a->size <= 3)
-	{
-		sort_three(a);
-		end_ok(a, b);
-		return (1);
-	}
-	if (a->size <= 5)
-	{
-		sort_five(a, b);
-		end_ok(a, b);
-		return (1);
-	}
-	return (0);
+	buf[i] = '\0';
+	return (i);
 }
 
 int	main(int ac, char **av)
 {
 	t_stack	a;
 	t_stack	b;
+	char	op[8];
 
 	stack_init(&a, 'a');
 	stack_init(&b, 'b');
@@ -51,14 +56,17 @@ int	main(int ac, char **av)
 		return (0);
 	if (!parse_args(ac, av, &a))
 	{
-		end_ok(&a, &b);
+		stack_clear(&a);
+		stack_clear(&b);
 		die_error();
 	}
-	if (handle_small(&a, &b))
-		return (0);
-	index_compress(&a);
-	mark_lis_keep(&a);
-	solve(&a, &b);
-	end_ok(&a, &b);
+	while (ch_read_line(op, (int)sizeof(op)) > 0)
+		ch_apply_op(op, &a, &b);
+	if (is_sorted(&a) && b.size == 0)
+		put_line("OK");
+	else
+		put_line("KO");
+	stack_clear(&a);
+	stack_clear(&b);
 	return (0);
 }

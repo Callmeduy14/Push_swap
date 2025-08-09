@@ -1,35 +1,53 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ops_push.c                                         :+:      :+:    :+:   */
+/*   lis_mark_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yyudi <yyudi@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/09 18:51:15 by yyudi             #+#    #+#             */
-/*   Updated: 2025/08/09 18:51:16 by yyudi            ###   ########.fr       */
+/*   Created: 2025/08/09 19:54:07 by yyudi             #+#    #+#             */
+/*   Updated: 2025/08/09 19:54:08 by yyudi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/push_swap.h"
 
-static void	push(t_stack *to, t_stack *from)
+static t_node	*node_at(t_stack *a, int pos)
+{
+	t_node	*n;
+	int		i;
+
+	n = a->top;
+	i = 0;
+	while (n && i < pos)
+	{
+		n = n->next;
+		i++;
+	}
+	return (n);
+}
+
+void	lis_clear_marks(t_stack *a)
 {
 	t_node	*n;
 
-	n = stack_pop_top(from);
-	if (!n)
-		return ;
-	stack_push_top(to, n);
+	n = a->top;
+	while (n)
+	{
+		n->lis_keep = 0;
+		n = n->next;
+	}
 }
 
-void	op_pa(t_stack *a, t_stack *b)
+void	lis_mark_backtrack(t_stack *a, int *prev, int i)
 {
-	push(a, b);
-	ps_puts("pa\n");
-}
+	t_node	*n;
 
-void	op_pb(t_stack *a, t_stack *b)
-{
-	push(b, a);
-	ps_puts("pb\n");
+	while (i != -1)
+	{
+		n = node_at(a, i);
+		if (n)
+			n->lis_keep = 1;
+		i = prev[i];
+	}
 }

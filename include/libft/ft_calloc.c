@@ -1,35 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ops_push.c                                         :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yyudi <yyudi@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/09 18:51:15 by yyudi             #+#    #+#             */
-/*   Updated: 2025/08/09 18:51:16 by yyudi            ###   ########.fr       */
+/*   Created: 2025/07/03 14:41:11 by yyudi             #+#    #+#             */
+/*   Updated: 2025/07/16 09:42:39 by yyudi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/push_swap.h"
+#include "libft.h"
 
-static void	push(t_stack *to, t_stack *from)
+void	*ft_calloc(size_t count, size_t size)
 {
-	t_node	*n;
+	void	*ptr;
 
-	n = stack_pop_top(from);
-	if (!n)
-		return ;
-	stack_push_top(to, n);
-}
-
-void	op_pa(t_stack *a, t_stack *b)
-{
-	push(a, b);
-	ps_puts("pa\n");
-}
-
-void	op_pb(t_stack *a, t_stack *b)
-{
-	push(b, a);
-	ps_puts("pb\n");
+	ptr = malloc(count * size);
+	if (!ptr)
+		return (NULL);
+	ft_bzero(ptr, count * size);
+	return (ptr);
 }

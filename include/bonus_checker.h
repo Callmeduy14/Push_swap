@@ -1,42 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ops_rotate.c                                       :+:      :+:    :+:   */
+/*   bonus_checker.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yyudi <yyudi@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/09 18:51:06 by yyudi             #+#    #+#             */
-/*   Updated: 2025/08/09 18:51:07 by yyudi            ###   ########.fr       */
+/*   Created: 2025/08/09 18:36:13 by yyudi             #+#    #+#             */
+/*   Updated: 2025/08/09 20:04:17 by yyudi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/push_swap.h"
+#ifndef BONUS_CHECKER_H
+# define BONUS_CHECKER_H
 
-static void	rotate(t_stack *s)
-{
-	t_node	*n;
+# include "../include/push_swap.h"
 
-	if (s->size < 2)
-		return ;
-	n = stack_pop_top(s);
-	stack_push_bot(s, n);
-}
+int		ch_read_line(char *buf, int max);
 
-void	op_ra(t_stack *a)
-{
-	rotate(a);
-	ps_puts("ra\n");
-}
+struct	s_stack;
 
-void	op_rb(t_stack *b)
-{
-	rotate(b);
-	ps_puts("rb\n");
-}
+int		ch_read_line(char *buf, int max);
+void	ch_swap(struct s_stack *s);
+void	ch_rot(struct s_stack *s);
+void	ch_rrot(struct s_stack *s);
+void	ch_push(struct s_stack *to, struct s_stack *from);
+void	ch_apply_op(const char *op, struct s_stack *a, struct s_stack *b);
 
-void	op_rr(t_stack *a, t_stack *b)
-{
-	rotate(a);
-	rotate(b);
-	ps_puts("rr\n");
-}
+#endif

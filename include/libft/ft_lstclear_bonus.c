@@ -1,35 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ops_push.c                                         :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yyudi <yyudi@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/09 18:51:15 by yyudi             #+#    #+#             */
-/*   Updated: 2025/08/09 18:51:16 by yyudi            ###   ########.fr       */
+/*   Created: 2025/07/03 21:56:38 by yyudi             #+#    #+#             */
+/*   Updated: 2025/07/08 11:37:15 by yyudi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/push_swap.h"
+#include "libft.h"
 
-static void	push(t_stack *to, t_stack *from)
+void	ft_lstclear(t_list **lst, void (*del)(void*))
 {
-	t_node	*n;
+	t_list	*tmp;
 
-	n = stack_pop_top(from);
-	if (!n)
+	if (!lst || !del)
 		return ;
-	stack_push_top(to, n);
-}
-
-void	op_pa(t_stack *a, t_stack *b)
-{
-	push(a, b);
-	ps_puts("pa\n");
-}
-
-void	op_pb(t_stack *a, t_stack *b)
-{
-	push(b, a);
-	ps_puts("pb\n");
+	while (*lst)
+	{
+		tmp = (*lst)->next;
+		ft_lstdelone(*lst, del);
+		*lst = tmp;
+	}
+	*lst = NULL;
 }

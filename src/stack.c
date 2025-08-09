@@ -1,38 +1,16 @@
-#include "push_swap.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   stack.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yyudi <yyudi@student.42heilbronn.de>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/09 19:53:49 by yyudi             #+#    #+#             */
+/*   Updated: 2025/08/09 20:12:03 by yyudi            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-static void	link_node_between(t_stack *s, t_node *n, t_node *prev, t_node *next)
-{
-	n->prev = prev;
-	n->next = next;
-	if (prev)
-		prev->next = n;
-	else
-		s->top = n;
-	if (next)
-		next->prev = n;
-	else
-		s->bot = n;
-	s->size++;
-}
-
-t_node	*node_new(int val)
-{
-	t_node	*n;
-
-	n = (t_node *)malloc(sizeof(t_node));
-	if (!n)
-		return (NULL);
-	n->val = val;
-	n->idx = -1;
-	n->lis_keep = 0;
-	n->pos = 0;
-	n->target_pos = 0;
-	n->cost_a = 0;
-	n->cost_b = 0;
-	n->prev = NULL;
-	n->next = NULL;
-	return (n);
-}
+#include "../include/push_swap.h"
 
 void	stack_init(t_stack *s, char name)
 {
@@ -44,12 +22,32 @@ void	stack_init(t_stack *s, char name)
 
 void	stack_push_top(t_stack *s, t_node *n)
 {
-	link_node_between(s, n, NULL, s->top);
+	t_node	*next;
+
+	next = s->top;
+	n->prev = NULL;
+	n->next = next;
+	if (next)
+		next->prev = n;
+	else
+		s->bot = n;
+	s->top = n;
+	s->size++;
 }
 
 void	stack_push_bot(t_stack *s, t_node *n)
 {
-	link_node_between(s, n, s->bot, NULL);
+	t_node	*prev;
+
+	prev = s->bot;
+	n->next = NULL;
+	n->prev = prev;
+	if (prev)
+		prev->next = n;
+	else
+		s->top = n;
+	s->bot = n;
+	s->size++;
 }
 
 t_node	*stack_pop_top(t_stack *s)
@@ -70,23 +68,6 @@ t_node	*stack_pop_top(t_stack *s)
 	return (n);
 }
 
-void	stack_clear(t_stack *s)
-{
-	t_node	*n;
-	t_node	*nx;
-
-	n = s->top;
-	while (n)
-	{
-		nx = n->next;
-		free(n);
-		n = nx;
-	}
-	s->top = NULL;
-	s->bot = NULL;
-	s->size = 0;
-}
-
 int	stack_min_idx_pos(t_stack *a)
 {
 	int		min;
@@ -94,7 +75,7 @@ int	stack_min_idx_pos(t_stack *a)
 	int		k;
 	t_node	*n;
 
-	if (!a->top)
+	if (!a || !a->top)
 		return (0);
 	min = a->top->idx;
 	pos = 0;

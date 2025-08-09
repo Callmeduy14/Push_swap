@@ -1,35 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ops_push.c                                         :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yyudi <yyudi@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/09 18:51:15 by yyudi             #+#    #+#             */
-/*   Updated: 2025/08/09 18:51:16 by yyudi            ###   ########.fr       */
+/*   Created: 2025/07/03 22:11:06 by yyudi             #+#    #+#             */
+/*   Updated: 2025/07/08 11:47:36 by yyudi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/push_swap.h"
+#include "libft.h"
 
-static void	push(t_stack *to, t_stack *from)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	t_node	*n;
-
-	n = stack_pop_top(from);
-	if (!n)
-		return ;
-	stack_push_top(to, n);
-}
-
-void	op_pa(t_stack *a, t_stack *b)
-{
-	push(a, b);
-	ps_puts("pa\n");
-}
-
-void	op_pb(t_stack *a, t_stack *b)
-{
-	push(b, a);
-	ps_puts("pb\n");
+	while (n-- && (*s1 || *s2))
+	{
+		if (*s1 != *s2)
+			return ((unsigned char)*s1 - (unsigned char)*s2);
+		s1++;
+		s2++;
+	}
+	return (0);
 }

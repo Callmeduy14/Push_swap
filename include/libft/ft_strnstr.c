@@ -1,35 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ops_push.c                                         :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yyudi <yyudi@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/09 18:51:15 by yyudi             #+#    #+#             */
-/*   Updated: 2025/08/09 18:51:16 by yyudi            ###   ########.fr       */
+/*   Created: 2025/07/03 21:36:40 by yyudi             #+#    #+#             */
+/*   Updated: 2025/07/15 14:12:54 by yyudi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/push_swap.h"
+#include "libft.h"
 
-static void	push(t_stack *to, t_stack *from)
+char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
-	t_node	*n;
+	size_t	little_len;
 
-	n = stack_pop_top(from);
-	if (!n)
-		return ;
-	stack_push_top(to, n);
-}
-
-void	op_pa(t_stack *a, t_stack *b)
-{
-	push(a, b);
-	ps_puts("pa\n");
-}
-
-void	op_pb(t_stack *a, t_stack *b)
-{
-	push(b, a);
-	ps_puts("pb\n");
+	if (big == NULL && len == 0)
+		return (0);
+	little_len = ft_strlen(little);
+	if (!little_len)
+		return ((char *)big);
+	while (*big && len >= little_len)
+	{
+		if (*big == *little && !ft_strncmp(big, little, little_len))
+			return ((char *)big);
+		big++;
+		len--;
+	}
+	return (NULL);
 }
