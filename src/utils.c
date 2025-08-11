@@ -6,7 +6,7 @@
 /*   By: yyudi <yyudi@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 19:53:31 by yyudi             #+#    #+#             */
-/*   Updated: 2025/08/09 20:00:54 by yyudi            ###   ########.fr       */
+/*   Updated: 2025/08/11 09:31:34 by yyudi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,27 +24,36 @@ static long	atol_fail(int *ok)
 	return (0L);
 }
 
-long	ps_atol(const char *s, int *ok)
+static const char	*atol_chekmp(const char *s, long *sign)
 {
-	long	sign = 1;
-	long	res = 0;
-
-	*ok = 1;
+	*sign = 1;
 	while (*s && ps_isspace(*s))
 		s++;
-	if (*s == '-')
-		sign = -1;
 	if (*s == '+' || *s == '-')
+	{
+		if (*s == '-')
+			*sign = -1;
 		s++;
+	}
+	return (s);
+}
+
+long	ps_atol(const char *s, int *ok)
+{
+	long	sign;
+	long	res;
+
+	*ok = 1;
+	res = 0;
+	s = atol_chekmp(s, &sign);
 	if (!ft_isdigit(*s))
 		return (atol_fail(ok));
-	while (*s && ft_isdigit(*s))
+	while (ft_isdigit(*s))
 	{
-		res = res * 10 + (*s - '0');
+		res = res * 10 + (*s++ - '0');
 		if ((sign == 1 && res > (long)INT_MAX)
-			|| (sign == -1 && -res < (long)INT_MIN))
+			|| (sign == -1 && - res < (long)INT_MIN))
 			return (atol_fail(ok));
-		s++;
 	}
 	while (*s && ps_isspace(*s))
 		s++;
@@ -60,5 +69,5 @@ int	ps_puts(const char *s)
 	len = 0;
 	while (s[len])
 		len++;
-	return ((int)write(1, s, len));
+	return ((int)write (1, s, len));
 }

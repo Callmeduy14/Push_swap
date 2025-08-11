@@ -6,7 +6,7 @@
 /*   By: yyudi <yyudi@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 18:35:58 by yyudi             #+#    #+#             */
-/*   Updated: 2025/08/09 20:29:23 by yyudi            ###   ########.fr       */
+/*   Updated: 2025/08/11 09:17:23 by yyudi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	main(int ac, char **av)
 		stack_clear(&b);
 		die_error();
 	}
-	while (ch_read_line(op, (int)sizeof(op)) > 0)
+	while (ch_read_line(op, (int) sizeof(op)) > 0)
 		ch_apply_op(op, &a, &b);
 	if (is_sorted(&a) && b.size == 0)
 		put_line("OK");
