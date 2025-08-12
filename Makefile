@@ -35,7 +35,8 @@ SRCS = \
 BONUS_SRCS = \
     $(BONUS_DIR)/checker_main.c \
     $(BONUS_DIR)/checker_ops.c \
-    $(BONUS_DIR)/checker_swap_rotate.c \
+    $(BONUS_DIR)/checker_rotate.c \
+	$(BONUS_DIR)/checker_swap.c
 
 OBJS       = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 BONUS_OBJS = $(BONUS_SRCS:$(BONUS_DIR)/%.c=$(OBJ_DIR)/bonus_%.o)
